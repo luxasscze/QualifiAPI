@@ -12,10 +12,5 @@ namespace QualifiAPI.Data
 
         public DbSet<PrequalificationRequest> Requests { get; set; }
         public DbSet<CreditCard> CreditCards { get; set; }
-
-        /*protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-        }*/
     }
 }

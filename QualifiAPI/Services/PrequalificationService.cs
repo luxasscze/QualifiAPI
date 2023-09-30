@@ -23,10 +23,13 @@ namespace QualifiAPI.Services
             {
                 List<CreditCard> creditCards = _context.CreditCards.Where(s => application.Salary >= s.MinSalary).ToList();
 
+                List<int> ccIds = new();
+                creditCards.ForEach(s => ccIds.Add(s.Id));
+                
                 PrequalificationRequest request = new()
                 {
                     Address = application.Address,
-                    CreditCards = creditCards,
+                    CreditCardIds = ccIds,
                     Dob = application.Dob,
                     Name = application.Name,
                     Salary = application.Salary,
@@ -41,7 +44,7 @@ namespace QualifiAPI.Services
             catch(Exception ex)
             {
                 return null;
-            }
+            } 
         }
 
         public async Task<List<CreditCard>?> GetAllCreditCards()
