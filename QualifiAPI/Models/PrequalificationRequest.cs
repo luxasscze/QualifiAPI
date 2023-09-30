@@ -1,6 +1,4 @@
-﻿using Microsoft.Identity.Client;
-
-namespace QualifiAPI.Models
+﻿namespace QualifiAPI.Models
 {
     public class PrequalificationRequest
     {
@@ -9,6 +7,7 @@ namespace QualifiAPI.Models
         public string? Address { get; set; }
         public DateTime Dob { get; set; }
         public decimal? Salary { get; set; }
+        public IList<CreditCard>? CreditCards { get; set; }
         public DateTime Created { get; set; }
     }
 }

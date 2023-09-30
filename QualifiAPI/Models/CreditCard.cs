@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
-using QualifiAPI.Enums;
 
 namespace QualifiAPI.Models
 {
@@ -9,7 +8,7 @@ namespace QualifiAPI.Models
         public string? CardName { get; set; }
         public string? Issuer { get; set; }
         public decimal? AnnualFee { get; set; }
-        public CreditScore CreditScoreRequirement { get; set; }
+        public decimal? MinSalary { get; set; }
         public string? Features { get; set; }
     }
 }

@@ -2,7 +2,6 @@
 using QualifiAPI.Data;
 using QualifiAPI.Models;
 using QualifiAPI.Services.Interfaces;
-using QualifiAPI.Utils;
 using System;
 
 namespace QualifiAPI.Services
@@ -16,25 +15,53 @@ namespace QualifiAPI.Services
             _context = context;
         }
 
-        public async Task<bool> PrequalificationRequestSave(PrequalificationRequest request)
+        public async Task<List<CreditCard>?> PrequalifyApplicant(Application application)
         {
-            if (request == null)
-            {
-                return false;
-            }
-            
-            await _context.Requests.AddAsync(request);
-            await _context.SaveChangesAsync();
+            if (application == null) { return null; }
 
-            return true;
+            try
+            {
+                List<CreditCard> creditCards = _context.CreditCards.Where(s => application.Salary >= s.MinSalary).ToList();
+
+                PrequalificationRequest request = new()
+                {
+                    Address = application.Address,
+                    CreditCards = new List<CreditCard>()
+                    {
+                        new CreditCard()
+                        {
+                            AnnualFee = 12.99M,
+                            CardName = "Testing Card",
+                            Features = "NONE",
+                            Issuer = "HSBC",
+                            MinSalary = 1299M
+                        }
+                    },
+                    Dob = application.Dob,
+                    Name = application.Name,
+                    Salary = application.Salary,
+                    Created = DateTime.Now
+                };
+
+                await _context.Requests.AddAsync(request);
+                await _context.SaveChangesAsync();
+
+                return creditCards;
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
         }
 
-        public async Task<List<CreditCard>?> PrequalifyApplicant(PrequalificationRequest request)
+        public async Task<List<CreditCard>?> GetAllCreditCards()
         {
-            if (request == null) { return null; }
+            return await _context.CreditCards.ToListAsync();
+        }
 
-            return await _context.CreditCards.Where(s => s.CreditScoreRequirement == CreditScoreUtils.GetCreditScoreFromSalary(request.Salary)).ToListAsync();
-
+        public async Task<List<PrequalificationRequest>> GetAllRequests()
+        {
+            return await _context.Requests.ToListAsync();
         }
     }
 }

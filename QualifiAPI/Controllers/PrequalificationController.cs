@@ -5,7 +5,7 @@ using QualifiAPI.Services.Interfaces;
 namespace QualifiAPI.Controllers
 {
     [ApiController]
-    [Route("/api/[controller]")]
+    [Route("/api/")]
     public class PrequalificationController : ControllerBase
     {
         private readonly ILogger<PrequalificationController> _logger;
@@ -17,10 +17,24 @@ namespace QualifiAPI.Controllers
             _prequalificationService = prequalificationService;
         }
 
-        [HttpPost(Name = "prequalification")]
-        public async Task<IActionResult> Prequalification([FromBody] PrequalificationRequest payload)
+        [HttpPost("prequalification")]
+        public async Task<IActionResult> Prequalification([FromBody] Application application)
         {
-            return Ok(await _prequalificationService.PrequalificationRequestSave(payload));
+            List<CreditCard>? creditCards = await _prequalificationService.PrequalifyApplicant(application);
+            
+            return Ok(creditCards);
+        }
+
+        [HttpGet("getallcc")]
+        public async Task<IActionResult> GetAllCC()
+        {
+            return Ok(await _prequalificationService.GetAllCreditCards());
+        }
+
+        [HttpGet("getallrequests")]
+        public async Task<IActionResult> GetAllRequests()
+        {
+            return Ok(await _prequalificationService.GetAllRequests());
         }
     }
 }

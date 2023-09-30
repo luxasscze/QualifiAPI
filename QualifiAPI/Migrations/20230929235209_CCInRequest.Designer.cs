@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QualifiAPI.Data;
 
@@ -11,9 +12,11 @@ using QualifiAPI.Data;
 namespace QualifiAPI.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20230929235209_CCInRequest")]
+    partial class CCInRequest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,14 +39,14 @@ namespace QualifiAPI.Migrations
                     b.Property<string>("CardName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CreditScoreRequirement")
+                        .HasColumnType("int");
+
                     b.Property<string>("Features")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Issuer")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("MinSalary")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("PrequalificationRequestId")
                         .HasColumnType("int");
@@ -52,7 +55,7 @@ namespace QualifiAPI.Migrations
 
                     b.HasIndex("PrequalificationRequestId");
 
-                    b.ToTable("CreditCards", (string)null);
+                    b.ToTable("CreditCards");
                 });
 
             modelBuilder.Entity("QualifiAPI.Models.PrequalificationRequest", b =>
@@ -66,9 +69,6 @@ namespace QualifiAPI.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("Dob")
                         .HasColumnType("datetime2");
 
@@ -80,7 +80,7 @@ namespace QualifiAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Requests", (string)null);
+                    b.ToTable("Requests");
                 });
 
             modelBuilder.Entity("QualifiAPI.Models.CreditCard", b =>
