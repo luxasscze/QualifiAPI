@@ -26,17 +26,7 @@ namespace QualifiAPI.Services
                 PrequalificationRequest request = new()
                 {
                     Address = application.Address,
-                    CreditCards = new List<CreditCard>()
-                    {
-                        new CreditCard()
-                        {
-                            AnnualFee = 12.99M,
-                            CardName = "Testing Card",
-                            Features = "NONE",
-                            Issuer = "HSBC",
-                            MinSalary = 1299M
-                        }
-                    },
+                    CreditCards = creditCards,
                     Dob = application.Dob,
                     Name = application.Name,
                     Salary = application.Salary,
