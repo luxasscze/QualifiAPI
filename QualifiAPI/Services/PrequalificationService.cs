@@ -15,6 +15,11 @@ namespace QualifiAPI.Services
             _context = context;
         }
 
+        /// <summary>
+        /// Function to determine available credit card offers for the applicant
+        /// </summary>
+        /// <param name="application">Input data</param>
+        /// <returns>List of available credit card offers</returns>
         public async Task<List<CreditCard>?> PrequalifyApplicant(Application application)
         {
             if (application == null) { return null; }
@@ -45,16 +50,6 @@ namespace QualifiAPI.Services
             {
                 return null;
             } 
-        }
-
-        public async Task<List<CreditCard>?> GetAllCreditCards()
-        {
-            return await _context.CreditCards.ToListAsync();
-        }
-
-        public async Task<List<PrequalificationRequest>> GetAllRequests()
-        {
-            return await _context.Requests.ToListAsync();
         }
     }
 }

@@ -8,33 +8,24 @@ namespace QualifiAPI.Controllers
     [Route("/api/")]
     public class PrequalificationController : ControllerBase
     {
-        private readonly ILogger<PrequalificationController> _logger;
         private readonly IPrequalificationService _prequalificationService;
 
-        public PrequalificationController(ILogger<PrequalificationController> logger, IPrequalificationService prequalificationService)
+        public PrequalificationController(IPrequalificationService prequalificationService)
         {
-            _logger = logger;
             _prequalificationService = prequalificationService;
         }
 
+        /// <summary>
+        /// API endpoint - Prequalification decision
+        /// </summary>
+        /// <param name="application">input parameters</param>
+        /// <returns>credit card list with available credit card offers based on data from "application"</returns>
         [HttpPost("prequalification")]
         public async Task<IActionResult> Prequalification([FromBody] Application application)
         {
             List<CreditCard>? creditCards = await _prequalificationService.PrequalifyApplicant(application);
             
             return Ok(creditCards);
-        }
-
-        [HttpGet("getallcc")]
-        public async Task<IActionResult> GetAllCC()
-        {
-            return Ok(await _prequalificationService.GetAllCreditCards());
-        }
-
-        [HttpGet("getallrequests")]
-        public async Task<IActionResult> GetAllRequests()
-        {
-            return Ok(await _prequalificationService.GetAllRequests());
         }
     }
 }

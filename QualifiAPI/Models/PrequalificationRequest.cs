@@ -16,7 +16,6 @@ namespace QualifiAPI.Models
             get => JsonSerializer.Serialize(CreditCardIds);
             set => CreditCardIds = JsonSerializer.Deserialize<List<int>?>(value);
         }
-
         [NotMapped]
         public List<int>? CreditCardIds { get; set; }
         public DateTime Created { get; set; }
