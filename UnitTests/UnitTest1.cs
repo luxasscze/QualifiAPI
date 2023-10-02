@@ -17,7 +17,7 @@ namespace UnitTests
         {
             var creditCards = new List<CreditCard>
             {
-                new CreditCard { AnnualFee = 12.99M, CardName = "Credit Card 1", Features = "None",Id = 1, Issuer = "Lukas", MinSalary = 12.99M },
+                new CreditCard { AnnualFee = 12.99M, CardName = "Credit Card 1", Features = "None",Id = 1, Issuer = "Lukas", MinSalary = 1 },
                 new CreditCard { AnnualFee = 15.99M, CardName = "Credit Card 2", Features = "None",Id = 2, Issuer = "Lukas", MinSalary = 1299.99M },
                 new CreditCard { AnnualFee = 17.99M, CardName = "Credit Card 3", Features = "None",Id = 3, Issuer = "Lukas", MinSalary = 1399.99M },
                 new CreditCard { AnnualFee = 19.99M, CardName = "Credit Card 4", Features = "None",Id = 4, Issuer = "Lukas", MinSalary = 1499.99M },
@@ -58,18 +58,101 @@ namespace UnitTests
         [Test]
         public async Task PrequalifyApplicant_Salary1_Returns1CCOffer()
         {
+            //Arrange
             PrequalificationService service = new PrequalificationService(mockContext.Object);
             Application application = new()
             {
                 Address = "Some address",
                 Dob = DateTime.Now.AddYears(-36),
                 Name = "Some Customer",
-                Salary = 19.45M
+                Salary = 1
             };
 
+            //Act
             var result = await service.PrequalifyApplicant(application);
 
+            //Assert
             Assert.That(result.Count == 1);
+        }
+
+        [Test]
+        public async Task PrequalifyApplicant_Salary1300_Returns2CCOffers()
+        {
+            //Arrange
+            PrequalificationService service = new PrequalificationService(mockContext.Object);
+            Application application = new()
+            {
+                Address = "Some address",
+                Dob = DateTime.Now.AddYears(-36),
+                Name = "Some Customer",
+                Salary = 1300
+            };
+
+            //Act
+            var result = await service.PrequalifyApplicant(application);
+
+            //Assert
+            Assert.That(result.Count == 2);
+        }
+
+        [Test]
+        public async Task PrequalifyApplicant_Salary1400_Returns3CCOffers()
+        {
+            //Arrange
+            PrequalificationService service = new PrequalificationService(mockContext.Object);
+            Application application = new()
+            {
+                Address = "Some address",
+                Dob = DateTime.Now.AddYears(-36),
+                Name = "Some Customer",
+                Salary = 1400
+            };
+
+            //Act
+            var result = await service.PrequalifyApplicant(application);
+
+            //Assert
+            Assert.That(result.Count == 3);
+        }
+
+        [Test]
+        public async Task PrequalifyApplicant_Salary1500_Returns4CCOffers()
+        {
+            //Arrange
+            PrequalificationService service = new PrequalificationService(mockContext.Object);
+            Application application = new()
+            {
+                Address = "Some address",
+                Dob = DateTime.Now.AddYears(-36),
+                Name = "Some Customer",
+                Salary = 1500
+            };
+
+            //Act
+            var result = await service.PrequalifyApplicant(application);
+
+            //Assert
+            Assert.That(result.Count == 4);
+        }
+
+        [Test]
+        public async Task PrequalifyApplicant_Salary1600_Returns5CCOffers()
+        {
+            //Arrange
+            PrequalificationService service = new PrequalificationService(mockContext.Object);
+            Application application = new()
+            {
+                Address = "Some address",
+                Dob = DateTime.Now.AddYears(-36),
+                Name = "Some Customer",
+                Salary = 1600
+            };
+
+            //Act
+            var result = await service.PrequalifyApplicant(application);
+
+            //Assert
+            Assert.That(result.Count == 5);
         }
     }
 }
