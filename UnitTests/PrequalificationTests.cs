@@ -3,8 +3,6 @@ using Moq;
 using QualifiAPI.Data;
 using QualifiAPI.Models;
 using QualifiAPI.Services;
-using QualifiAPI.Services.Interfaces;
-using System.Reflection.Metadata;
 
 namespace UnitTests
 {
@@ -33,7 +31,7 @@ namespace UnitTests
                     Dob = DateTime.Now.AddYears(-36),
                     Id = 1,
                     Name = "Some Name",
-                    Salary = 1699.99M
+                    Salary = 1699.99M,                    
                 },                
 
             }.AsQueryable();
@@ -52,7 +50,7 @@ namespace UnitTests
 
             mockContext = new Mock<ApplicationContext>();
             mockContext.Setup(c => c.CreditCards).Returns(mockSet.Object);
-            mockContext.Setup(s => s.Requests).Returns(requestsMockSet.Object);
+            mockContext.Setup(c => c.Requests).Returns(requestsMockSet.Object);
         }
 
         [Test]
@@ -69,10 +67,10 @@ namespace UnitTests
             };
 
             //Act
-            var result = await service.PrequalifyApplicant(application);
+            List<CreditCard>? result = await service.PrequalifyApplicant(application);
 
             //Assert
-            Assert.That(result.Count == 1);
+            Assert.That(result, Has.Count.EqualTo(1));
         }
 
         [Test]
@@ -89,10 +87,10 @@ namespace UnitTests
             };
 
             //Act
-            var result = await service.PrequalifyApplicant(application);
+            List<CreditCard>? result = await service.PrequalifyApplicant(application);
 
             //Assert
-            Assert.That(result.Count == 2);
+            Assert.That(result, Has.Count.EqualTo(2));
         }
 
         [Test]
@@ -109,10 +107,10 @@ namespace UnitTests
             };
 
             //Act
-            var result = await service.PrequalifyApplicant(application);
+            List<CreditCard>? result = await service.PrequalifyApplicant(application);
 
             //Assert
-            Assert.That(result.Count == 3);
+            Assert.That(result, Has.Count.EqualTo(3));
         }
 
         [Test]
@@ -129,10 +127,10 @@ namespace UnitTests
             };
 
             //Act
-            var result = await service.PrequalifyApplicant(application);
+            List<CreditCard>? result = await service.PrequalifyApplicant(application);
 
             //Assert
-            Assert.That(result.Count == 4);
+            Assert.That(result, Has.Count.EqualTo(4));
         }
 
         [Test]
@@ -149,10 +147,47 @@ namespace UnitTests
             };
 
             //Act
-            var result = await service.PrequalifyApplicant(application);
+            List<CreditCard>? result = await service.PrequalifyApplicant(application);
 
             //Assert
-            Assert.That(result.Count == 5);
+            Assert.That(result, Has.Count.EqualTo(5));
+        }
+
+        [Test]
+        public async Task PrequalifyApplicant_Salary0_Returns0CCOffers()
+        {
+            //Arrange
+            PrequalificationService service = new PrequalificationService(mockContext.Object);
+            Application application = new()
+            {
+                Address = "Some address",
+                Dob = DateTime.Now.AddYears(-36),
+                Name = "Some Customer",
+                Salary = 0
+            };
+
+            //Act
+            List<CreditCard>? result = await service.PrequalifyApplicant(application);
+
+            //Assert
+            Assert.That(result, Has.Count.EqualTo(0));
+        }
+
+        [Test]
+        public async Task PrequalifyApplicant_MissingApplicationData_Returns0CCOffers()
+        {
+            //Arrange
+            PrequalificationService service = new PrequalificationService(mockContext.Object);
+            Application application = new()
+            {
+                
+            };
+
+            //Act
+            List<CreditCard>? result = await service.PrequalifyApplicant(application);
+
+            //Assert
+            Assert.That(result, Has.Count.EqualTo(0));
         }
     }
 }
