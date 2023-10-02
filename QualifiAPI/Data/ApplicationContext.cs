@@ -10,7 +10,12 @@ namespace QualifiAPI.Data
 
         }
 
-        public DbSet<PrequalificationRequest> Requests { get; set; }
-        public DbSet<CreditCard> CreditCards { get; set; }
+        public ApplicationContext()
+        {
+
+        }
+
+        public virtual DbSet<PrequalificationRequest> Requests { get; set; }
+        public virtual DbSet<CreditCard> CreditCards { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace QualifiAPI.Services
 
                 List<int> ccIds = new();
                 creditCards.ForEach(s => ccIds.Add(s.Id));
-                
+
                 PrequalificationRequest request = new()
                 {
                     Address = application.Address,
@@ -46,10 +46,10 @@ namespace QualifiAPI.Services
 
                 return creditCards;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return null;
-            } 
+            }
         }
     }
 }
