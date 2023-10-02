@@ -15,25 +15,24 @@ namespace UnitTests
         {
             var creditCards = new List<CreditCard>
             {
-                new CreditCard { AnnualFee = 12.99M, CardName = "Credit Card 1", Features = "None",Id = 1, Issuer = "Lukas", MinSalary = 1 },
-                new CreditCard { AnnualFee = 15.99M, CardName = "Credit Card 2", Features = "None",Id = 2, Issuer = "Lukas", MinSalary = 1299.99M },
-                new CreditCard { AnnualFee = 17.99M, CardName = "Credit Card 3", Features = "None",Id = 3, Issuer = "Lukas", MinSalary = 1399.99M },
-                new CreditCard { AnnualFee = 19.99M, CardName = "Credit Card 4", Features = "None",Id = 4, Issuer = "Lukas", MinSalary = 1499.99M },
-                new CreditCard { AnnualFee = 21.99M, CardName = "Credit Card 5", Features = "None",Id = 5, Issuer = "Lukas", MinSalary = 1599.99M },
-
+                new CreditCard { AnnualFee = 12.99M, CardName = "Credit Card 1", Features = "None", Id = 1, Issuer = "Lukas", MinSalary = 1 },
+                new CreditCard { AnnualFee = 15.99M, CardName = "Credit Card 2", Features = "None", Id = 2, Issuer = "Lukas", MinSalary = 1299.99M },
+                new CreditCard { AnnualFee = 17.99M, CardName = "Credit Card 3", Features = "None", Id = 3, Issuer = "Lukas", MinSalary = 1399.99M },
+                new CreditCard { AnnualFee = 19.99M, CardName = "Credit Card 4", Features = "None", Id = 4, Issuer = "Lukas", MinSalary = 1499.99M },
+                new CreditCard { AnnualFee = 21.99M, CardName = "Credit Card 5", Features = "None", Id = 5, Issuer = "Lukas", MinSalary = 1599.99M },
             }.AsQueryable();
 
             var requests = new List<PrequalificationRequest>
             {
                 new PrequalificationRequest 
-                { Address = "Some Address", 
+                { 
+                    Address = "Some Address", 
                     Created = DateTime.Now,                     
                     Dob = DateTime.Now.AddYears(-36),
                     Id = 1,
                     Name = "Some Name",
                     Salary = 1699.99M,                    
                 },                
-
             }.AsQueryable();
 
             var mockSet = new Mock<DbSet<CreditCard>>();
