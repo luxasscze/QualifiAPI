@@ -8,7 +8,7 @@ namespace QualifiAPI.Services
 {
     public class PrequalificationService : IPrequalificationService
     {
-        public ApplicationContext _context;
+        private ApplicationContext _context;
 
         public PrequalificationService(ApplicationContext context)
         {
@@ -48,7 +48,7 @@ namespace QualifiAPI.Services
             }
             catch (Exception ex)
             {
-                return null;
+                throw new Exception(ex.Message);
             }
         }
     }
